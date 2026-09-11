@@ -1,15 +1,12 @@
-# meterologystation
-Here is guide how to create meterologystation with Blynk
 # DIY IoT Meteorology Station (ESP32-S3 + Blynk)
 
 A low-cost, WiFi-connected weather station built on the ESP32-S3 that measures temperature, humidity, barometric pressure, ambient light, and distance (for snow depth / water level), with live data pushed to the Blynk IoT dashboard.
 
 ## Features
 
-- 🌡️ Temperature & humidity (DHT22 / AM2302)
+- 🌡️ Temperature & humidity (AOSONG AM2302)
 - 🌬️ Barometric pressure (BMP180)
 - ☀️ Ambient light level (LDR)
-- 📏 Distance sensing for snow depth or water level (HC-SR04 ultrasonic)
 - ☁️ Live dashboard via Blynk IoT (mobile app + web)
 - 📊 Historical data charts (built into Blynk)
 - 🔔 Configurable threshold alerts (optional, via Blynk Automations)
@@ -19,10 +16,9 @@ A low-cost, WiFi-connected weather station built on the ESP32-S3 that measures t
 | Component | Purpose | Notes |
 |---|---|---|
 | ESP32-S3 Dev Board | Main controller | Confirm exact model — pin availability varies |
-| DHT22 (AM2302) | Temperature & humidity | 10kΩ pull-up resistor if not built into your module |
+| AOSONG AM2302 | Temperature & humidity | 10kΩ pull-up resistor if not built into your module |
 | BMP180 | Barometric pressure | I2C, fixed address 0x77 |
 | LDR (photoresistor) | Ambient light | Needs a fixed resistor for a voltage divider |
-| HC-SR04 | Ultrasonic distance (snow depth / water level) | 5V logic — confirm your board's Echo pin is 5V tolerant or use a voltage divider |
 | Fixed resistor (~10kΩ) | LDR voltage divider | Any resistor in the 1kΩ–10kΩ range works |
 | Breadboard + jumper wires | Prototyping | — |
 | USB-C cable | Programming & power | Data-capable, not charge-only |
@@ -33,10 +29,8 @@ A low-cost, WiFi-connected weather station built on the ESP32-S3 that measures t
 |---|---|---|
 | BMP180 | SDA | GPIO 8 |
 | BMP180 | SCL | GPIO 9 |
-| DHT22 | Data | GPIO 5 |
+| AM2302 | Data | GPIO 5 |
 | LDR | Analog Out | GPIO 4 |
-| HC-SR04 | Trig | GPIO 6 |
-| HC-SR04 | Echo | GPIO 7 |
 
 All sensors share 3.3V/5V and GND rails as appropriate to each module's spec sheet. **Always confirm your specific board's pinout diagram** — GPIO numbering can vary between ESP32-S3 board vendors.
 
@@ -102,9 +96,11 @@ Run an I2C scanner sketch first to confirm BMP180 (0x77) is detected on the bus 
 - Add a rain gauge (tipping-bucket + reed switch) for real rainfall measurement
 - Add an anemometer/wind vane for wind speed and direction
 - Add a UV index sensor
+- Add an ultrasonic distance sensor (HC-SR04) for snow depth or water level
 - SD card logging for offline data history
 - Battery + solar power for fully off-grid operation
 - Outdoor radiation shield enclosure to prevent direct sunlight from skewing temperature/humidity readings
+
 
 ```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 // ============================================================
